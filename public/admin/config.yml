@@ -1,12 +1,6 @@
-# Decap CMS — Equilibrius
-# Autenticação via GitHub Personal Access Token
-
 backend:
-  name: github
+  name: git-gateway
   branch: main
-  repo: hldramos/equilibrius-web
-  auth_type: implicit
-  app_id: 1ea593b9102acda5bdd6
 
 local_backend: false
 
@@ -20,46 +14,6 @@ slug:
   clean_accents: true
 
 collections:
-  - name: "servicos"
-    label: "Serviços"
-    label_singular: "Serviço"
-    folder: "src/content/servicos"
-    create: true
-    format: "mdx-frontmatter"
-    extension: mdx
-    slug: "{{slug}}"
-    preview_path: "servicos/{{slug}}"
-    fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Resumo", name: "summary", widget: "text" }
-      - label: "FAQ"
-        name: "faq"
-        widget: "list"
-        required: false
-        fields:
-          - { label: "Pergunta", name: "question", widget: "string" }
-          - { label: "Resposta", name: "answer", widget: "text" }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
-
-  - name: "segmentos"
-    label: "Segmentos"
-    label_singular: "Segmento"
-    folder: "src/content/segmentos"
-    create: true
-    format: "mdx-frontmatter"
-    extension: mdx
-    slug: "{{slug}}"
-    preview_path: "segmentos/{{slug}}"
-    fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Resumo", name: "summary", widget: "text" }
-      - label: "Dores"
-        name: "pains"
-        widget: "list"
-        required: false
-        field: { label: "Dor", name: "pain", widget: "string" }
-      - { label: "Conteúdo", name: "body", widget: "markdown", required: false }
-
   - name: "blog"
     label: "Blog"
     label_singular: "Artigo"
@@ -79,9 +33,7 @@ collections:
         widget: "list"
         required: false
         field: { label: "Tag", name: "tag", widget: "string" }
-      - { label: "Autor", name: "author", widget: "string", default: "EQUILIBRIUS" }
       - { label: "Tempo de leitura", name: "readingTime", widget: "string", required: false }
-      - { label: "SEO Description", name: "seoDescription", widget: "text", required: false }
       - label: "Serviços relacionados"
         name: "relatedServices"
         widget: "list"
@@ -89,15 +41,3 @@ collections:
         field: { label: "Slug", name: "slug", widget: "string" }
       - { label: "Rascunho", name: "draft", widget: "boolean", default: false }
       - { label: "Conteúdo", name: "body", widget: "markdown" }
-
-  - name: "config"
-    label: "Configurações do site"
-    files:
-      - name: "site"
-        label: "Dados do site"
-        file: "src/content/config/site.mdx"
-        fields:
-          - { label: "E-mail", name: "email", widget: "string" }
-          - { label: "WhatsApp", name: "whatsapp", widget: "string" }
-          - { label: "CNPJ", name: "cnpj", widget: "string" }
-          - { label: "Horário", name: "hours", widget: "string" }
