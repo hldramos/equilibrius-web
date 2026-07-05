@@ -1,10 +1,12 @@
 # Decap CMS — Equilibrius
-# Configuração para conteúdo editável do site institucional.
-# Deploy: Netlify + GitHub.
+# Autenticação via GitHub Personal Access Token
 
 backend:
-  name: git-gateway
+  name: github
   branch: main
+  repo: hldramos/equilibrius-web
+  auth_type: implicit
+  app_id: 1ea593b9102acda5bdd6
 
 local_backend: false
 
@@ -28,8 +30,8 @@ collections:
     slug: "{{slug}}"
     preview_path: "servicos/{{slug}}"
     fields:
-      - { label: "Título", name: "title", widget: "string", required: true }
-      - { label: "Resumo", name: "summary", widget: "text", required: true }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Resumo", name: "summary", widget: "text" }
       - label: "FAQ"
         name: "faq"
         widget: "list"
@@ -37,7 +39,7 @@ collections:
         fields:
           - { label: "Pergunta", name: "question", widget: "string" }
           - { label: "Resposta", name: "answer", widget: "text" }
-      - { label: "Conteúdo", name: "body", widget: "markdown", required: true }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
 
   - name: "segmentos"
     label: "Segmentos"
@@ -49,8 +51,8 @@ collections:
     slug: "{{slug}}"
     preview_path: "segmentos/{{slug}}"
     fields:
-      - { label: "Título", name: "title", widget: "string", required: true }
-      - { label: "Resumo", name: "summary", widget: "text", required: true }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Resumo", name: "summary", widget: "text" }
       - label: "Dores"
         name: "pains"
         widget: "list"
@@ -68,9 +70,9 @@ collections:
     slug: "{{slug}}"
     preview_path: "blog/{{slug}}"
     fields:
-      - { label: "Título", name: "title", widget: "string", required: true }
-      - { label: "Resumo", name: "excerpt", widget: "text", required: true }
-      - { label: "Data de publicação", name: "publishedAt", widget: "datetime", required: true }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Resumo", name: "excerpt", widget: "text" }
+      - { label: "Data de publicação", name: "publishedAt", widget: "datetime" }
       - { label: "Data de atualização", name: "updatedAt", widget: "datetime", required: false }
       - label: "Tags"
         name: "tags"
@@ -78,26 +80,15 @@ collections:
         required: false
         field: { label: "Tag", name: "tag", widget: "string" }
       - { label: "Autor", name: "author", widget: "string", default: "EQUILIBRIUS" }
-      - { label: "Tempo de leitura", name: "readingTime", widget: "string", required: false, hint: "ex.: 5 min" }
+      - { label: "Tempo de leitura", name: "readingTime", widget: "string", required: false }
       - { label: "SEO Description", name: "seoDescription", widget: "text", required: false }
       - label: "Serviços relacionados"
         name: "relatedServices"
         widget: "list"
         required: false
-        field: { label: "Slug do serviço", name: "slug", widget: "string" }
+        field: { label: "Slug", name: "slug", widget: "string" }
       - { label: "Rascunho", name: "draft", widget: "boolean", default: false }
-      - { label: "Conteúdo", name: "body", widget: "markdown", required: true }
-
-  - name: "paginas"
-    label: "Páginas institucionais"
-    label_singular: "Página"
-    files:
-      - name: "sobre"
-        label: "Sobre"
-        file: "src/content/paginas/sobre.mdx"
-        fields:
-          - { label: "Título", name: "title", widget: "string", default: "Sobre" }
-          - { label: "Conteúdo", name: "body", widget: "markdown" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
 
   - name: "config"
     label: "Configurações do site"
@@ -106,7 +97,7 @@ collections:
         label: "Dados do site"
         file: "src/content/config/site.mdx"
         fields:
-          - { label: "E-mail comercial", name: "email", widget: "string" }
+          - { label: "E-mail", name: "email", widget: "string" }
           - { label: "WhatsApp", name: "whatsapp", widget: "string" }
           - { label: "CNPJ", name: "cnpj", widget: "string" }
-          - { label: "Horário de atendimento", name: "hours", widget: "string" }
+          - { label: "Horário", name: "hours", widget: "string" }
