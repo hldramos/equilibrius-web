@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import CtaBlock from "../../components/CtaBlock.astro";
+import { SERVICES } from "../../lib/services";
+import { breadcrumbSchema } from "../../lib/seo";
+---
+
+<BaseLayout
+  title="Serviços de contabilidade e consultoria tributária"
+  description="Contabilidade empresarial, consultoria tributária, planejamento, abertura de empresa, departamento pessoal, troca de contador e mais — em todo o Brasil."
+  path="/servicos"
+  jsonLd={breadcrumbSchema([
+    { name: "Início", url: "/" },
+    { name: "Serviços", url: "/servicos" },
+  ])}
+>
+  <section class="bg-ink-900 text-white py-16 md:py-24">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h1 class="font-display text-3xl md:text-5xl font-semibold leading-tight max-w-3xl">
+        Serviços para organizar a conformidade da sua empresa
+      </h1>
+      <p class="mt-6 text-lg text-silver-200 leading-relaxed max-w-2xl">
+        Cada serviço responde a uma dor tributária ou contábil real. Sem
+        card de catálogo genérico — com método e base legal.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24 bg-silver-50">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <Breadcrumbs trail={[{ name: "Início", href: "/" }, { name: "Serviços", href: "/servicos" }]} />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {SERVICES.map((service) => (
+          <ServiceCard
+            title={service.title}
+            summary={service.summary}
+            href={service.url}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBlock
+    title="Não sabe qual serviço precisa?"
+    subtitle="Conte sobre o seu caso e indicamos o caminho. Sem compromisso."
+    serviceSlug="hub-servicos"
+    submitText="Falar com especialista"
+  />
+</BaseLayout>

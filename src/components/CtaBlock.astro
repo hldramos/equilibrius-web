@@ -1,0 +1,43 @@
+---
+import LeadFormShort from "./LeadFormShort.astro";
+import { faqSchema } from "../lib/seo";
+import { SITE } from "../lib/site";
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  serviceSlug?: string;
+  submitText?: string;
+}
+
+const { title, subtitle, serviceSlug, submitText = "Quero ser contatado" } = Astro.props;
+---
+
+<section class="bg-ink-700 py-16 md:py-24">
+  <div class="max-w-[var(--container-max)] mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div>
+        <h2 class="font-display text-3xl md:text-4xl font-semibold text-white">
+          {title}
+        </h2>
+        {subtitle && (
+          <p class="mt-4 text-lg text-silver-200 leading-relaxed max-w-md">
+            {subtitle}
+          </p>
+        )}
+        <p class="mt-6 text-sm text-silver-300">
+          Atendimento em todo o Brasil · {SITE.hours}
+        </p>
+      </div>
+
+      <div class="bg-white rounded-lg p-1">
+        <LeadFormShort
+          context={serviceSlug || "cta-final"}
+          serviceSlug={serviceSlug}
+          submitText={submitText}
+          variant="card"
+        />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,139 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import BaseLegalBox from "../../components/BaseLegalBox.astro";
+import CtaBlock from "../../components/CtaBlock.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import { SITE } from "../../lib/site";
+import { articleSchema, breadcrumbSchema } from "../../lib/seo";
+import { SERVICES } from "../../lib/services";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const relatedServices = (post.data.relatedServices || [])
+  .map((slug) => SERVICES.find((s) => s.slug === slug))
+  .filter(Boolean)
+  .slice(0, 3);
+
+const url = `${SITE.url}/blog/${post.id}`;
+
+const jsonLd = [
+  articleSchema({
+    title: post.data.title,
+    description: post.data.seoDescription || post.data.excerpt,
+    url,
+    datePublished: post.data.publishedAt.toISOString(),
+    dateModified: post.data.updatedAt?.toISOString(),
+    author: post.data.author,
+  }),
+  breadcrumbSchema([
+    { name: "Início", url: "/" },
+    { name: "Blog", url: "/blog" },
+    { name: post.data.title, url: `/blog/${post.id}` },
+  ]),
+];
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.seoDescription || post.data.excerpt}
+  path={`/blog/${post.id}`}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article>
+    <!-- Header -->
+    <section class="bg-ink-900 text-white py-16 md:py-20">
+      <div class="max-w-[var(--container-max)] mx-auto px-6">
+        <Breadcrumbs
+          trail={[
+            { name: "Início", href: "/" },
+            { name: "Blog", href: "/blog" },
+            { name: post.data.title, href: `/blog/${post.id}` },
+          ]}
+        />
+        <div class="flex flex-wrap items-center gap-3 text-xs text-silver-300 mb-4">
+          <time datetime={post.data.publishedAt.toISOString()}>
+            {post.data.publishedAt.toLocaleDateString("pt-BR", { day: "numeric", month: "long", year: "numeric" })}
+          </time>
+          {post.data.readingTime && (
+            <>
+              <span>·</span>
+              <span>{post.data.readingTime} de leitura</span>
+            </>
+          )}
+        </div>
+        <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight max-w-3xl">
+          {post.data.title}
+        </h1>
+        <p class="mt-4 text-lg text-silver-200 leading-relaxed max-w-2xl">
+          {post.data.excerpt}
+        </p>
+        <div class="mt-6 flex items-center gap-2 text-sm text-silver-300">
+          <span>Por {post.data.author}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Corpo -->
+    <section class="py-16 md:py-20 bg-white">
+      <div class="max-w-3xl mx-auto px-6">
+        <div class="article-body">
+          <Content />
+        </div>
+
+        <!-- Aviso de compliance -->
+        <div class="mt-12">
+          <BaseLegalBox
+            title="Conteúdo informativo"
+            body="Este artigo é informativo e não substitui uma análise individual do seu caso. Para orientação específica, fale com a Equilibrius."
+          />
+        </div>
+
+        <!-- Tags -->
+        {post.data.tags.length > 0 && (
+          <div class="mt-8 flex flex-wrap gap-2">
+            {post.data.tags.map((tag) => (
+              <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-ink-700 bg-silver-100 border border-silver-200 rounded-full">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- Serviços relacionados -->
+    {relatedServices.length > 0 && (
+      <section class="py-16 bg-silver-50">
+        <div class="max-w-[var(--container-max)] mx-auto px-6">
+          <h2 class="font-display text-2xl font-semibold text-ink-900 mb-8">
+            Serviços relacionados a este artigo
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedServices.map((s) => (
+              <ServiceCard title={s.title} summary={s.summary} href={s.url} variant="compact" />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </article>
+
+  <CtaBlock
+    title="Falar com especialista sobre este tema"
+    subtitle="15 minutos, sem compromisso. O próximo passo é seu."
+    serviceSlug={`blog-${post.id}`}
+    submitText="Quero ser contatado"
+  />
+</BaseLayout>

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /api
+
+Sitemap: https://equilibriusconsultoria.com.br/sitemap-index.xml

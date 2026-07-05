@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import CtaBlock from "../../components/CtaBlock.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import { SEGMENTS } from "../../lib/segments";
+import { SERVICES } from "../../lib/services";
+import { SITE } from "../../lib/site";
+import { breadcrumbSchema } from "../../lib/seo";
+
+export function getStaticPaths() {
+  return SEGMENTS.map((segment) => ({
+    params: { slug: segment.slug },
+    props: { segment },
+  }));
+}
+
+const { segment } = Astro.props;
+const recommendedServices = SERVICES.slice(0, 3);
+
+const jsonLd = breadcrumbSchema([
+  { name: "Início", url: "/" },
+  { name: "Segmentos", url: "/segmentos" },
+  { name: segment.title, url: `/segmentos/${segment.slug}` },
+]);
+---
+
+<BaseLayout
+  title={`Contabilidade para ${segment.title} · EQUILIBRIUS`}
+  description={segment.summary}
+  path={`/segmentos/${segment.slug}`}
+  jsonLd={jsonLd}
+>
+  <section class="bg-ink-900 text-white py-16 md:py-24">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <Breadcrumbs
+        trail={[
+          { name: "Início", href: "/" },
+          { name: "Segmentos", href: "/segmentos" },
+          { name: segment.title, href: segment.url },
+        ]}
+      />
+      <h1 class="font-display text-3xl md:text-5xl font-semibold leading-tight max-w-3xl">
+        Contabilidade para {segment.title.toLowerCase()}
+      </h1>
+      <p class="mt-6 text-lg text-silver-200 leading-relaxed max-w-2xl">
+        {segment.summary}
+      </p>
+    </div>
+  </section>
+
+  <!-- Dores do segmento -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink-900 mb-10 max-w-2xl">
+        Dores tributárias de {segment.title.toLowerCase()}
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {segment.pains.map((pain) => (
+          <div class="border border-silver-200 rounded-lg p-6 bg-silver-50">
+            <div class="flex items-start gap-3">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ink-700 shrink-0 mt-0.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4M12 16h.01" stroke-linecap="round"/>
+              </svg>
+              <p class="text-sm text-graphite leading-relaxed">{pain}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Serviços recomendados -->
+  <section class="py-16 md:py-24 bg-silver-50">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink-900 mb-8 max-w-2xl">
+        Serviços recomendados
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {recommendedServices.map((s) => (
+          <ServiceCard title={s.title} summary={s.summary} href={s.url} variant="compact" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBlock
+    title={`Sua empresa é de ${segment.title.toLowerCase()}?`}
+    subtitle="Vamos entender o seu caso e indicar o caminho — sem compromisso."
+    serviceSlug={`segmento-${segment.slug}`}
+    submitText="Falar com especialista"
+  />
+</BaseLayout>

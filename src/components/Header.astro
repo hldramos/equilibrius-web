@@ -1,0 +1,90 @@
+---
+import { NAV_LINKS } from "../lib/site";
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-[var(--z-header)] bg-white/95 backdrop-blur-sm border-b border-silver-200 transition-shadow duration-200"
+>
+  <nav class="max-w-[var(--container-max)] mx-auto px-6 flex items-center justify-between h-[72px]">
+    <a href="/" class="flex items-center gap-2 group" aria-label="EQUILIBRIUS — Página inicial">
+      <span class="font-display text-xl font-bold tracking-tight text-ink-900 group-hover:text-ink-700 transition-colors">
+        EQUILIBRIUS
+      </span>
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8">
+      {NAV_LINKS.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="text-sm font-medium text-graphite hover:text-ink-700 transition-colors"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="hidden md:flex items-center gap-3">
+      <a
+        href="/contato"
+        class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-ink-900 rounded-md hover:bg-ink-700 transition-colors"
+      >
+        Falar com especialista
+      </a>
+    </div>
+
+    <button
+      id="mobile-toggle"
+      class="md:hidden p-2 -mr-2 text-ink-900"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+    >
+      <svg id="icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="block">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" />
+      </svg>
+      <svg id="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden">
+        <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" />
+      </svg>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="hidden md:hidden border-t border-silver-200 bg-white">
+    <ul class="px-6 py-4 space-y-3">
+      {NAV_LINKS.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="block py-2 text-base font-medium text-graphite hover:text-ink-700"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+      <li class="pt-2">
+        <a
+          href="/contato"
+          class="block w-full text-center px-5 py-3 text-sm font-semibold text-white bg-ink-900 rounded-md"
+        >
+          Falar com especialista
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("mobile-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const iconOpen = document.getElementById("icon-open");
+  const iconClose = document.getElementById("icon-close");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = menu?.classList.toggle("hidden");
+    toggle.setAttribute("aria-expanded", String(!isOpen));
+    toggle.setAttribute("aria-label", isOpen ? "Abrir menu" : "Fechar menu");
+    iconOpen?.classList.toggle("hidden", !isOpen);
+    iconClose?.classList.toggle("hidden", isOpen);
+  });
+</script>

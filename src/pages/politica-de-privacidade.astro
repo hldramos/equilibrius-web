@@ -1,0 +1,126 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../lib/site";
+
+const lastUpdate = "Julho de 2025";
+const dpoEmail = SITE.dpoEmail || SITE.email;
+---
+
+<BaseLayout
+  title="Política de Privacidade"
+  description="Política de Privacidade da EQUILIBRIUS CONSULTORIA TRIBUTÁRIA & CONTÁBIL — tratamento de dados pessoais conforme a LGPD."
+  path="/politica-de-privacidade"
+  noindex
+>
+  <section class="bg-ink-900 text-white py-16">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h1 class="font-display text-3xl md:text-4xl font-semibold">
+        Política de Privacidade
+      </h1>
+      <p class="mt-4 text-sm text-silver-300">Última atualização: {lastUpdate}</p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-6 article-body">
+      <h2>1. Controlador dos dados</h2>
+      <p>
+        A <strong>{SITE.fullName}</strong>, inscrita no CNPJ sob nº <strong>{SITE.cnpj}</strong>,
+        é a responsável ("controladora") pelo tratamento dos dados pessoais coletados
+        por meio deste site e dos canais de contato.
+      </p>
+      <p class="text-sm text-graphite-light italic mt-2">
+        [Confirmar razão social completa correspondente ao CNPJ junto à empresa.]
+      </p>
+
+      <h2>2. Dados que coletamos</h2>
+      <p>Coletamos apenas os dados necessários para responder ao seu contato e prestar nossos serviços:</p>
+      <ul>
+        <li><strong>Nome</strong> — para identificação;</li>
+        <li><strong>Empresa</strong> (opcional) — para contexto do atendimento;</li>
+        <li><strong>WhatsApp / Telefone</strong> e/ou <strong>E-mail</strong> — para resposta;</li>
+        <li><strong>Mensagem</strong> — para entender a sua demanda;</li>
+        <li><strong>UTMs</strong> (fonte de tráfego, campanha) — para mensurar a origem do contato;</li>
+        <li><strong>Endereço IP e dados de navegação</strong> — para segurança e analytics, com consentimento.</li>
+      </ul>
+
+      <h2>3. Finalidade e base legal</h2>
+      <p>
+        Os dados são tratados para responder ao seu contato e, se contratado o serviço,
+        para a execução do contrato. As bases legais são:
+      </p>
+      <ul>
+        <li><strong>Legítimo interesse</strong> (art. 7º, inc. IX da LGPD) — para responder e organizar a comunicação;</li>
+        <li><strong>Consentimento</strong> (art. 7º, inc. I da LGPD) — manifestado no formulário;</li>
+        <li><strong>Execução de contrato</strong> (art. 7º, inc. V da LGPD) — quando há relação contratual.</li>
+      </ul>
+
+      <h2>4. Compartilhamento</h2>
+      <p>
+        Não compartilhamos seus dados com terceiros, exceto quando exigido por autoridade
+        competente, ou com provedores de infraestrutura (ex.: hospedagem, gateway de e-mail)
+        estritamente necessários ao funcionamento do serviço — sempre sob acordo de confidencialidade.
+      </p>
+
+      <h2>5. Retenção</h2>
+      <p>
+        Conservamos os dados de contato por <strong>até 24 meses</strong> após o último
+        contato, salvo solicitação de exclusão antecipada. Após esse prazo, os dados são
+        excluídos, salvo obrigação legal de guarda.
+      </p>
+      <p class="text-sm text-graphite-light italic mt-1">
+        [Confirmar política de retenção interna da empresa.]
+      </p>
+
+      <h2>6. Cookies</h2>
+      <p>
+        Usamos apenas cookies essenciais ao funcionamento do site. Cookies analíticos,
+        se utilizados, exigirão consentimento prévio por meio de banner específico.
+      </p>
+
+      <h2>7. Seus direitos como titular</h2>
+      <p>Você pode, a qualquer momento, solicitar:</p>
+      <ul>
+        <li>Confirmação da existência de tratamento;</li>
+        <li>Acesso aos seus dados;</li>
+        <li>Correção de dados incompletos ou inexatos;</li>
+        <li>Anonimização, bloqueio ou eliminação de dados desnecessários;</li>
+        <li>Portabilidade dos dados;</li>
+        <li>Eliminação dos dados tratados com consentimento;</li>
+        <li>Informação sobre entidades com as quais compartilhamos seus dados.</li>
+      </ul>
+      <p>
+        Para exercer qualquer direito, escreva para <a href={`mailto:${dpoEmail}`}>{dpoEmail}</a>.
+      </p>
+
+      <h2>8. Encarregado pelo tratamento (DPO)</h2>
+      <p>
+        O encarregado pelo tratamento de dados pessoais pode ser contatado pelo e-mail
+        <a href={`mailto:${dpoEmail}`}>{dpoEmail}</a>.
+      </p>
+      <p class="text-sm text-graphite-light italic mt-1">
+        [Indicar nome do encarregado e e-mail dedicado, se houver.]
+      </p>
+
+      <h2>9. Segurança</h2>
+      <p>
+        Adotamos medidas técnicas e organizativas para proteger seus dados:
+        comunicação criptografada (HTTPS), formulários com validação e restrição de
+        acesso a dados pessoais dentro da organização.
+      </p>
+
+      <h2>10. Alterações desta política</h2>
+      <p>
+        Esta política pode ser atualizada. A data no topo indica a última revisão.
+        Recomendamos que você a consulte periodicamente.
+      </p>
+
+      <h2>11. Contato</h2>
+      <p>
+        Em caso de dúvidas sobre esta política ou sobre o tratamento dos seus dados,
+        entre em contato pelo e-mail <a href={`mailto:${dpoEmail}`}>{dpoEmail}</a> ou pelo
+        WhatsApp <a href={SITE.whatsappLink} target="_blank" rel="noopener noreferrer">{SITE.whatsapp}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

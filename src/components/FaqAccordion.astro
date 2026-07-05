@@ -1,0 +1,15 @@
+---
+import FaqItem from "./FaqItem.astro";
+
+interface Props {
+  items: { question: string; answer: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="divide-y divide-silver-200">
+  {items.map((item) => (
+    <FaqItem question={item.question} answer={item.answer} />
+  ))}
+</div>

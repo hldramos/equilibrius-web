@@ -1,0 +1,339 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
+import BaseLegalBox from "../../components/BaseLegalBox.astro";
+import CtaBlock from "../../components/CtaBlock.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import SegmentChip from "../../components/SegmentChip.astro";
+import { SERVICES } from "../../lib/services";
+import { SEGMENTS } from "../../lib/segments";
+import { SITE } from "../../lib/site";
+import { serviceSchema, breadcrumbSchema } from "../../lib/seo";
+
+export function getStaticPaths() {
+  return SERVICES.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const related = SERVICES.filter((s) => s.slug !== service.slug).slice(0, 3);
+const relatedSegments = SEGMENTS.slice(0, 3);
+
+const deliverables: Record<string, string[]> = {
+  "contabilidade-empresarial": [
+    "Escrituração contábil mensal",
+    "Entrega de obrigações acessórias (DCTF, EFD, SPED)",
+    "Demonstrações contábeis (Balanço, DRE, BP)",
+    "Conciliação e conferência de guias",
+    "Relatório mensal de obrigações",
+  ],
+  "consultoria-tributaria": [
+    "Análise de enquadramento tributário atual",
+    "Mapeamento de créditos recuperáveis",
+    "Defesa fiscal administrativa (quando aplicável)",
+    "Parecer técnico com base legal",
+    "Plano de ação documentado",
+  ],
+  "planejamento-tributario": [
+    "Comparativo de regimes (Simples, Presumido, Real)",
+    "Projeção de carga tributária por cenário",
+    "Identificação de economias legais aplicáveis",
+    "Cronograma de implementação",
+    "Relatório de impacto financeiro",
+  ],
+  "abertura-de-empresa": [
+    "Definição de tipo societário e regime tributário",
+    "Contrato social orientado",
+    "Protocolo na Junta Comercial e Receita",
+    "Obtenção de CNPJ e inscrições estadual/municipal",
+    "Checklist documental completo",
+  ],
+  "regularizacao-empresarial": [
+    "Levantamento de pendências (Federal, Estadual, Municipal)",
+    "Análise de prescrição e possibilidade de compensação",
+    "Negociação ou parcelamento de débitos",
+    "Regularização cadastral total",
+    "Retorno à conformidade documentado",
+  ],
+  "departamento-pessoal": [
+    "Admissão, rescisão e férias",
+    "Folha de pagamento completa",
+    "eSocial — todas as obrigações",
+    "Controle de ponto e jornadas",
+    "Orientação trabalhista preventiva",
+  ],
+  "obrigacoes-fiscais": [
+    "DCTF mensal",
+    "EFD-Contribuições",
+    "EFD ICMS/IPI (SPED Fiscal)",
+    "SPED Contábil",
+    "Declarações do Simples Nacional (DEFIS)",
+  ],
+  "troca-de-contador": [
+    "Diagnóstico dos documentos a receber",
+    "Comunicação formal com o contador anterior",
+    "Migração de histórico sem perda de dados",
+    "Verificação de pendências anteriores",
+    "Transição documentada e transparente",
+  ],
+  "consultoria-contabil-recorrente": [
+    "Reuniões mensais de acompanhamento",
+    "Relatórios gerenciais contábeis e tributários",
+    "Análise estratégica de resultados",
+    "Acompanhamento de prazos e obrigações",
+    "Acesso direto a responsável técnico",
+  ],
+};
+
+const painPoints: Record<string, { title: string; description: string }[]> = {
+  "contabilidade-empresarial": [
+    { title: "Medo de multa por atraso", description: "Obrigações acessórias em atraso geram multa — e muitas vezes nem sabia que existiam." },
+    { title: "Contabilidade sem uso", description: "Você só entrega pro banco — não usa pra decisões." },
+    { title: "Guia errada", description: "Valor apurado não confere com a operação real." },
+  ],
+  "consultoria-tributaria": [
+    { title: "Não sei se enquadramento é o ideal", description: "Regime escolhido hoje não reflete a realidade da empresa." },
+    { title: "Créditos não aproveitados", description: "Você paga PIS/COFINS, ICMS e outros sem usar os créditos a que tem direito." },
+    { title: "Defesa fiscal sem rumo", description: "Autuação tributária sem saber o que fazer." },
+  ],
+  "planejamento-tributario": [
+    { title: "Pago demais", description: "Você suspeita que sua empresa paga mais imposto do que precisa." },
+    { title: "Regime antigo", description: "Escolheu Simples quando começou e nunca mais revisou." },
+    { title: "Decisão sem dado", description: "Troca de regime baseada em achismo, não em projeção." },
+  ],
+  "abertura-de-empresa": [
+    { title: "Não sei por onde começar", description: "Opções de tipo societário e regime parecem grego." },
+    { title: "Medo de errar o contrato", description: "Contrato social mal feito vira custo depois." },
+    { title: "Burocracia interminável", description: "Sabe que precisa abrir — mas trava nos órgãos." },
+  ],
+  "regularizacao-empresarial": [
+    { title: "Pendência travando operação", description: "CNPJ irregular impede licitação, crédito ou contrato." },
+    { title: "Dívida sem saber o tamanho", description: "Sabe que deve, mas não sabe quanto, pra quem e se é prescritível." },
+    { title: "Medo de autuação", description: "Receita ou estado cobrando sem plano de resposta." },
+  ],
+  "departamento-pessoal": [
+    { title: "Medo de eSocial errado", description: "Multa por envio incorreto é comum." },
+    { title: "Folha fora de controle", description: "Verbas, encargos e dissídios viram confusão." },
+    { title: "Sem rotina de admissão", description: "Toda contratação vira improviso documental." },
+  ],
+  "obrigacoes-fiscais": [
+    { title: "Vencimento surpresa", description: "Sem calendário fiscal claro, toda obrigação vira urgência." },
+    { title: "SPED atrasado", description: "Multa por atraso e impacto em restituições." },
+    { title: "Guia paga errada", description: "DARF/DARE pagos sem conferência geram retrabalho." },
+  ],
+  "troca-de-contador": [
+    { title: "Atendimento ruim", description: "Seu contador não responde, não explica e não antecipa." },
+    { title: "Medo de interrupção", description: "Troca trava histórico e obrigações durante a migração." },
+    { title: "Sem começo claro", description: "Não sabe qual documentação exigir do contador atual." },
+  ],
+  "consultoria-contabil-recorrente": [
+    { title: "Contador reativo", description: "Você precisa perguntar tudo — nada chega preventivamente." },
+    { title: "Decisão sem relatório", description: "Não tem número mensal para decidir com segurança." },
+    { title: "Sem acesso a quem decide", description: "Sempre intermediado por estagiário ou central." },
+  ],
+};
+
+const baseLegalNotes: Record<string, { title: string; body: string; cite?: string }> = {
+  "planejamento-tributario": {
+    title: "Base legal do planejamento tributário",
+    body: "Planejamento tributário é prática regular e amparada pela legislação Brasileira. Trabalhamos com fundamentos legais citáveis — Leis, Leis Complementares e Instruções Normativas — para escolha de regime, aproveitamento de créditos e otimização da carga tributária. Não utilizamos omissão, brecha ou prática duvidosa.",
+    cite: "Art. 116 do CTN e Súmula ANT 1/2020.",
+  },
+  "abertura-de-empresa": {
+    title: "Base legal da abertura",
+    body: "A abertura segue os normativos federais (Lei 8.934/94, IN DREI 11/22) e estaduais/municipais aplicáveis ao endereço fiscal e atividade. Garantimos conformidade desde o contrato social até as inscrições específicas.",
+    cite: "Lei 8.934/94, IN DREI nº 11/2022.",
+  },
+  "consultoria-tributaria": {
+    title: "Base legal da consultoria tributária",
+    body: "Toda orientação tributária da Equilibrius é fundamentada em dispositivo legal específico — não em julgamento isolado. O parecer técnico menciona a norma quando relevante.",
+    cite: "CTN — Sistema Tributário Nacional.",
+  },
+};
+
+const painItems = painPoints[service.slug] || [];
+const deliverableItems = deliverables[service.slug] || [];
+const baseLegal = baseLegalNotes[service.slug];
+
+const jsonLd = [
+  serviceSchema({
+    name: service.title,
+    description: service.summary,
+    url: `${SITE.url}/servicos/${service.slug}`,
+  }),
+  breadcrumbSchema([
+    { name: "Início", url: "/" },
+    { name: "Serviços", url: "/servicos" },
+    { name: service.title, url: `/servicos/${service.slug}` },
+  ]),
+];
+---
+
+<BaseLayout
+  title={service.title}
+  description={service.summary}
+  path={`/servicos/${service.slug}`}
+  jsonLd={jsonLd}
+>
+  <!-- Hero do serviço -->
+  <section class="bg-ink-900 text-white py-16 md:py-24">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <Breadcrumbs
+        trail={[
+          { name: "Início", href: "/" },
+          { name: "Serviços", href: "/servicos" },
+          { name: service.title, href: service.url },
+        ]}
+      />
+      <h1 class="font-display text-3xl md:text-5xl font-semibold leading-tight max-w-3xl">
+        {service.title}
+      </h1>
+      <p class="mt-6 text-lg text-silver-200 leading-relaxed max-w-2xl">
+        {service.summary}
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4">
+        <a
+          href="/contato"
+          class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-ink-900 bg-white rounded-md hover:bg-silver-100 transition-colors"
+        >
+          Falar sobre este serviço
+        </a>
+        <a
+          href={SITE.whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white border border-ink-500 rounded-md hover:bg-ink-700 transition-colors"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-whatsapp">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+          </svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Esse serviço resolve -->
+  {painItems.length > 0 && (
+    <section class="py-16 md:py-24 bg-white">
+      <div class="max-w-[var(--container-max)] mx-auto px-6">
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink-900 mb-10 max-w-2xl">
+          Esse serviço resolve
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {painItems.map((pain) => (
+            <div class="border border-silver-200 rounded-lg p-6 bg-silver-50">
+              <h3 class="font-display font-semibold text-base text-ink-900 mb-2">{pain.title}</h3>
+              <p class="text-sm text-graphite leading-relaxed">{pain.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- O que inclui -->
+  {deliverableItems.length > 0 && (
+    <section class="py-16 md:py-24 bg-silver-50">
+      <div class="max-w-[var(--container-max)] mx-auto px-6">
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink-900 mb-8 max-w-2xl">
+          O que inclui
+        </h2>
+        <ul class="space-y-3 max-w-2xl">
+          {deliverableItems.map((item) => (
+            <li class="flex items-start gap-3 text-base text-graphite">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 text-ink-700 shrink-0">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- Como trabalhamos -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink-900 mb-10 max-w-2xl">
+        Como trabalhamos
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <div class="w-10 h-10 rounded-full bg-ink-900 text-white flex items-center justify-center font-display font-semibold mb-4">1</div>
+          <h3 class="font-display font-semibold text-lg text-ink-900">Diagnóstico</h3>
+          <p class="mt-1 text-sm text-graphite leading-relaxed">
+            Avaliamos documentação, regime e obrigações atuais.
+          </p>
+        </div>
+        <div>
+          <div class="w-10 h-10 rounded-full bg-ink-900 text-white flex items-center justify-center font-display font-semibold mb-4">2</div>
+          <h3 class="font-display font-semibold text-lg text-ink-900">Proposta</h3>
+          <p class="mt-1 text-sm text-graphite leading-relaxed">
+            Caminhos com base legal e impacto previsto — você decide.
+          </p>
+        </div>
+        <div>
+          <div class="w-10 h-10 rounded-full bg-ink-900 text-white flex items-center justify-center font-display font-semibold mb-4">3</div>
+          <h3 class="font-display font-semibold text-lg text-ink-900">Execução</h3>
+          <p class="mt-1 text-sm text-graphite leading-relaxed">
+            Implementamos e documentamos, com acompanhamento contínuo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Base legal -->
+  {baseLegal && (
+    <section class="py-8 bg-white">
+      <div class="max-w-[var(--container-max)] mx-auto px-6">
+        <BaseLegalBox title={baseLegal.title} body={baseLegal.body} cite={baseLegal.cite} />
+      </div>
+    </section>
+  )}
+
+  <!-- FAQ do serviço -->
+  <section class="py-16 md:py-24 bg-silver-50">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink-900 mb-8 max-w-2xl">
+        Perguntas sobre {service.title.toLowerCase()}
+      </h2>
+      <div class="max-w-3xl">
+        <FaqAccordion items={service.faq} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Relacionados -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink-900 mb-8">
+        Serviços relacionados
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {related.map((s) => (
+          <ServiceCard title={s.title} summary={s.summary} href={s.url} variant="compact" />
+        ))}
+      </div>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <span class="text-sm text-graphite-light self-center mr-2">Segmentos:</span>
+        {relatedSegments.map((seg) => (
+          <SegmentChip title={seg.title} href={seg.url} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CtaBlock
+    title={`Solicitar ${service.title.toLowerCase()}`}
+    subtitle="15 minutos, sem compromisso. O próximo passo é seu."
+    serviceSlug={service.slug}
+    submitText="Falar com especialista"
+  />
+</BaseLayout>

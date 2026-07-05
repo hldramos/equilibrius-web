@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import CtaBlock from "../../components/CtaBlock.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString("pt-BR", { day: "numeric", month: "short", year: "numeric" });
+
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))];
+---
+
+<BaseLayout
+  title="Blog · Tributos, contabilidade e gestão"
+  description="Artigos técnicos em linguagem acessível sobre tributos, contabilidade, eSocial, abertura de empresa e planejamento tributário."
+  path="/blog"
+>
+  <section class="bg-ink-900 text-white py-16 md:py-24">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h1 class="font-display text-3xl md:text-5xl font-semibold leading-tight">
+        Blog EQUILIBRIUS
+      </h1>
+      <p class="mt-6 text-lg text-silver-200 leading-relaxed max-w-2xl">
+        Tributos, contabilidade e gestão empresarial em linguagem acessível.
+        Conteúdo com base legal — e sem promessa vazia.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24 bg-silver-50">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <Breadcrumbs trail={[{ name: "Início", href: "/" }, { name: "Blog", href: "/blog" }]} />
+
+      {allTags.length > 0 && (
+        <div class="mb-10 flex flex-wrap gap-2">
+          <span class="text-sm text-graphite-light self-center mr-2">Filtrar:</span>
+          {allTags.map((tag) => (
+            <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-ink-700 bg-silver-100 border border-silver-200 rounded-full">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post) => (
+          <a
+            href={`/blog/${post.id}`}
+            class="group flex flex-col bg-white border border-silver-200 rounded-lg overflow-hidden hover:shadow-[var(--shadow-2)] hover:border-ink-500/30 transition-all duration-200"
+          >
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center gap-3 text-xs text-graphite-light mb-3">
+                <time datetime={post.data.publishedAt.toISOString()}>
+                  {fmtDate(post.data.publishedAt)}
+                </time>
+                {post.data.readingTime && (
+                  <>
+                    <span>·</span>
+                    <span>{post.data.readingTime}</span>
+                  </>
+                )}
+              </div>
+              <h2 class="font-display font-semibold text-lg text-ink-900 group-hover:text-ink-700 transition-colors mb-2">
+                {post.data.title}
+              </h2>
+              <p class="text-sm text-graphite leading-relaxed flex-1">
+                {post.data.excerpt}
+              </p>
+              <span class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-ink-600 group-hover:text-ink-700 transition-colors">
+                Ler artigo
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:translate-x-1 transition-transform">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <div class="text-center py-20">
+          <p class="text-graphite">Em breve, novos artigos. Volte em alguns dias.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <CtaBlock
+    title="Tire sua dúvida com quem decide"
+    subtitle="Conte sobre o seu caso e indicamos o caminho. Atendimento em todo o Brasil."
+    serviceSlug="blog-cta"
+    submitText="Falar com especialista"
+  />
+</BaseLayout>

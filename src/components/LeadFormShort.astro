@@ -1,0 +1,130 @@
+---
+import { SITE } from "../lib/site";
+
+interface Props {
+  context?: string;
+  serviceSlug?: string;
+  submitText?: string;
+  variant?: "card" | "inline";
+}
+
+const {
+  context = "contato-geral",
+  serviceSlug,
+  submitText = "Quero ser contatado",
+  variant = "card",
+} = Astro.props;
+
+const formId = `lead-form-${context}-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<form
+  id={formId}
+  name="lead"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  action="/contato?enviado=1"
+  class:list={[
+    "flex flex-col gap-4",
+    variant === "card" && "p-6 md:p-8 bg-silver-50 rounded-lg border border-silver-200",
+  ]}
+>
+  <input type="hidden" name="form-name" value="lead" />
+  <input type="hidden" name="bot-field" />
+  <input type="hidden" name="service_context" value={serviceSlug || context} />
+
+  <div>
+    <label for={`${formId}-name`} class="block text-sm font-medium text-ink-900 mb-1.5">
+      Nome <span class="text-error">*</span>
+    </label>
+    <input
+      id={`${formId}-name`}
+      name="name"
+      type="text"
+      required
+      minlength="2"
+      placeholder="Seu nome"
+      class="w-full h-12 px-4 bg-white border border-silver-300 rounded-md text-sm text-graphite focus:outline-none focus:border-ink-500 focus:ring-1 focus:ring-ink-500 transition-colors"
+    />
+  </div>
+
+  <div>
+    <label for={`${formId}-company`} class="block text-sm font-medium text-ink-900 mb-1.5">
+      Empresa <span class="text-graphite-light font-normal">(opcional)</span>
+    </label>
+    <input
+      id={`${formId}-company`}
+      name="company"
+      type="text"
+      placeholder="Nome da empresa"
+      class="w-full h-12 px-4 bg-white border border-silver-300 rounded-md text-sm text-graphite focus:outline-none focus:border-ink-500 focus:ring-1 focus:ring-ink-500 transition-colors"
+    />
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <label for={`${formId}-phone`} class="block text-sm font-medium text-ink-900 mb-1.5">
+        WhatsApp / Telefone
+      </label>
+      <input
+        id={`${formId}-phone`}
+        name="phone"
+        type="tel"
+        placeholder="(00) 90000-0000"
+        class="w-full h-12 px-4 bg-white border border-silver-300 rounded-md text-sm text-graphite focus:outline-none focus:border-ink-500 focus:ring-1 focus:ring-ink-500 transition-colors"
+      />
+    </div>
+
+    <div>
+      <label for={`${formId}-email`} class="block text-sm font-medium text-ink-900 mb-1.5">
+        E-mail
+      </label>
+      <input
+        id={`${formId}-email`}
+        name="email"
+        type="email"
+        placeholder="seu@email.com"
+        class="w-full h-12 px-4 bg-white border border-silver-300 rounded-md text-sm text-graphite focus:outline-none focus:border-ink-500 focus:ring-1 focus:ring-ink-500 transition-colors"
+      />
+    </div>
+  </div>
+
+  <div>
+    <label for={`${formId}-message`} class="block text-sm font-medium text-ink-900 mb-1.5">
+      Como podemos ajudar? <span class="text-graphite-light font-normal">(opcional)</span>
+    </label>
+    <textarea
+      id={`${formId}-message`}
+      name="message"
+      rows="3"
+      maxlength="500"
+      placeholder="Conte brevemente sobre o seu caso."
+      class="w-full px-4 py-3 bg-white border border-silver-300 rounded-md text-sm text-graphite focus:outline-none focus:border-ink-500 focus:ring-1 focus:ring-ink-500 transition-colors resize-none"
+    ></textarea>
+  </div>
+
+  <div class="flex items-start gap-2">
+    <input
+      id={`${formId}-consent`}
+      name="consent"
+      type="checkbox"
+      required
+      class="mt-1 w-4 h-4 accent-ink-700"
+    />
+    <label for={`${formId}-consent`} class="text-sm text-graphite leading-snug">
+      Concordo com o tratamento dos meus dados para resposta ao contato, conforme a
+      <a href="/politica-de-privacidade" class="text-ink-600 hover:text-ink-700 underline underline-offset-2">
+        Política de Privacidade
+      </a>.
+      <span class="text-error">*</span>
+    </label>
+  </div>
+
+  <button
+    type="submit"
+    class="w-full h-12 inline-flex items-center justify-center px-6 text-sm font-semibold text-white bg-ink-900 rounded-md hover:bg-ink-700 transition-colors"
+  >
+    {submitText}
+  </button>
+</form>

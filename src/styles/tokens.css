@@ -1,0 +1,74 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/inter";
+
+/* ===================================================
+   DESIGN TOKENS — Equilibrius
+   Hipótese de paleta a validar contra logo vetorial
+   =================================================== */
+@theme {
+  /* Cores — Azual institucional */
+  --color-ink-900: #0B1E3B;
+  --color-ink-800: #0F2848;
+  --color-ink-700: #14365C;
+  --color-ink-600: #1E4A78;
+  --color-ink-500: #3E5B7E;
+  --color-ink-400: #6B85A8;
+
+  /* Prata / cinza */
+  --color-silver-300: #C5CDD7;
+  --color-silver-200: #D8DEE6;
+  --color-silver-100: #EEF1F5;
+  --color-silver-50: #F7F9FB;
+
+  /* Neutros */
+  --color-paper: #FFFFFF;
+  --color-graphite: #475569;
+  --color-graphite-light: #64748B;
+
+  /* Estado */
+  --color-success: #1F7A4D;
+  --color-error: #B3261E;
+  --color-whatsapp: #25D366;
+  --color-accent-warm: #C9A227;
+
+  /* Tipografia */
+  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter Variable", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Espaçamento */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 48px;
+  --spacing-8: 64px;
+  --spacing-9: 96px;
+
+  /* Layout */
+  --container-max: 1200px;
+  --gutter: 24px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Sombras */
+  --shadow-1: 0 1px 3px rgba(11, 30, 59, 0.06);
+  --shadow-2: 0 4px 12px rgba(11, 30, 59, 0.10);
+  --shadow-3: 0 8px 24px rgba(11, 30, 59, 0.14);
+
+  /* Transições */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+
+  /* z-index */
+  --z-header: 100;
+  --z-whatsapp: 90;
+  --z-modal: 200;
+}

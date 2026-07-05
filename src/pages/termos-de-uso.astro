@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../lib/site";
+
+const lastUpdate = "Julho de 2025";
+---
+
+<BaseLayout
+  title="Termos de Uso"
+  description="Termos de Uso do site da EQUILIBRIUS CONSULTORIA TRIBUTÁRIA & CONTÁBIL."
+  path="/termos-de-uso"
+  noindex
+>
+  <section class="bg-ink-900 text-white py-16">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h1 class="font-display text-3xl md:text-4xl font-semibold">
+        Termos de Uso
+      </h1>
+      <p class="mt-4 text-sm text-silver-300">Última atualização: {lastUpdate}</p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-6 article-body">
+      <h2>1. Objeto</h2>
+      <p>
+        Estes Termos de Uso regem o acesso e a utilização do site
+        <strong>{SITE.url}</strong>, mantido pela <strong>{SITE.fullName}</strong>,
+        CNPJ <strong>{SITE.cnpj}</strong>.
+      </p>
+
+      <h2>2. Natureza do conteúdo</h2>
+      <p>
+        O conteúdo deste site é informativo. Os textos — em especial os artigos do blog
+        e as citações de base legal — não constituem parecer técnico personalizado nem
+        substituem a contratação de serviço contábil e tributário para o seu caso.
+      </p>
+
+      <h2>3. Uso permitido</h2>
+      <ul>
+        <li>Navegação, leitura e compartilhamento do conteúdo com citação da fonte;</li>
+        <li>Contato por meio dos formulários e canais disponibilizados;</li>
+        <li>Referência ao site em outras publicações, desde que com link para a fonte.</li>
+      </ul>
+
+      <h2>4. Uso vedado</h2>
+      <ul>
+        <li>Copiar, reproduzir ou distribuir o conteúdo sem atribuição;</li>
+        <li>Utilizar o site para fins ilegais ou em violação a estes Termos;</li>
+        <li>Tentar acessar áreas restritas ou sistemas internos sem autorização.</li>
+      </ul>
+
+      <h2>5. Propriedade intelectual</h2>
+      <p>
+        Todo o conteúdo original deste site — textos, layout, design, identidade visual
+        e código — é de titularidade da EQUILIBRIUS, salvo quando citada fonte externa.
+        A marca EQUILIBRIUS é protegida.
+      </p>
+
+      <h2>6. Links externos</h2>
+      <p>
+        Eventuais links externos não representam endosso ao conteúdo de terceiros.
+        Não nos responsabilizamos pelo conteúdo de sites acessados a partir deste.
+      </p>
+
+      <h2>7. Isenção de responsabilidade</h2>
+      <p>
+        A EQUILIBRIUS busca manter o conteúdo atualizado, mas não garante ausência de
+        erros ortográficos, desatualizações normativas ou indisponibilidades temporárias.
+        As decisões tributárias e contábeis são sempre tomadas em consultoria
+        personalizada — não com base exclusiva no conteúdo deste site.
+      </p>
+
+      <h2>8. Privacidade</h2>
+      <p>
+        O tratamento dos dados pessoais coletados neste site segue a nossa
+        <a href="/politica-de-privacidade">Política de Privacidade</a> e a LGPD
+        (Lei nº 13.709/2018).
+      </p>
+
+      <h2>9. Alterações</h2>
+      <p>
+        Reservamo-nos o direito de atualizar estes Termos a qualquer momento.
+        A data no topo indica a última revisão.
+      </p>
+
+      <h2>10. Contato</h2>
+      <p>
+        Em caso de dúvidas sobre estes Termos, entre em contato pelo e-mail
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

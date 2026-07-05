@@ -1,0 +1,112 @@
+# Decap CMS — Equilibrius
+# Configuração para conteúdo editável do site institucional.
+# Deploy: Netlify + GitHub.
+
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: false
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+publish_mode: editorial_workflow
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+
+collections:
+  - name: "servicos"
+    label: "Serviços"
+    label_singular: "Serviço"
+    folder: "src/content/servicos"
+    create: true
+    format: "mdx-frontmatter"
+    extension: mdx
+    slug: "{{slug}}"
+    preview_path: "servicos/{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string", required: true }
+      - { label: "Resumo", name: "summary", widget: "text", required: true }
+      - label: "FAQ"
+        name: "faq"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Pergunta", name: "question", widget: "string" }
+          - { label: "Resposta", name: "answer", widget: "text" }
+      - { label: "Conteúdo", name: "body", widget: "markdown", required: true }
+
+  - name: "segmentos"
+    label: "Segmentos"
+    label_singular: "Segmento"
+    folder: "src/content/segmentos"
+    create: true
+    format: "mdx-frontmatter"
+    extension: mdx
+    slug: "{{slug}}"
+    preview_path: "segmentos/{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string", required: true }
+      - { label: "Resumo", name: "summary", widget: "text", required: true }
+      - label: "Dores"
+        name: "pains"
+        widget: "list"
+        required: false
+        field: { label: "Dor", name: "pain", widget: "string" }
+      - { label: "Conteúdo", name: "body", widget: "markdown", required: false }
+
+  - name: "blog"
+    label: "Blog"
+    label_singular: "Artigo"
+    folder: "src/content/blog"
+    create: true
+    format: "mdx-frontmatter"
+    extension: mdx
+    slug: "{{slug}}"
+    preview_path: "blog/{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string", required: true }
+      - { label: "Resumo", name: "excerpt", widget: "text", required: true }
+      - { label: "Data de publicação", name: "publishedAt", widget: "datetime", required: true }
+      - { label: "Data de atualização", name: "updatedAt", widget: "datetime", required: false }
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: { label: "Tag", name: "tag", widget: "string" }
+      - { label: "Autor", name: "author", widget: "string", default: "EQUILIBRIUS" }
+      - { label: "Tempo de leitura", name: "readingTime", widget: "string", required: false, hint: "ex.: 5 min" }
+      - { label: "SEO Description", name: "seoDescription", widget: "text", required: false }
+      - label: "Serviços relacionados"
+        name: "relatedServices"
+        widget: "list"
+        required: false
+        field: { label: "Slug do serviço", name: "slug", widget: "string" }
+      - { label: "Rascunho", name: "draft", widget: "boolean", default: false }
+      - { label: "Conteúdo", name: "body", widget: "markdown", required: true }
+
+  - name: "paginas"
+    label: "Páginas institucionais"
+    label_singular: "Página"
+    files:
+      - name: "sobre"
+        label: "Sobre"
+        file: "src/content/paginas/sobre.mdx"
+        fields:
+          - { label: "Título", name: "title", widget: "string", default: "Sobre" }
+          - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "config"
+    label: "Configurações do site"
+    files:
+      - name: "site"
+        label: "Dados do site"
+        file: "src/content/config/site.mdx"
+        fields:
+          - { label: "E-mail comercial", name: "email", widget: "string" }
+          - { label: "WhatsApp", name: "whatsapp", widget: "string" }
+          - { label: "CNPJ", name: "cnpj", widget: "string" }
+          - { label: "Horário de atendimento", name: "hours", widget: "string" }

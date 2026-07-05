@@ -1,0 +1,277 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import SegmentChip from "../components/SegmentChip.astro";
+import StepList from "../components/StepList.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { SERVICES } from "../lib/services";
+import { SEGMENTS } from "../lib/segments";
+import { SITE } from "../lib/site";
+import { faqSchema } from "../lib/seo";
+
+const homeFaq = [
+  {
+    question: "Vou gastar muito com consultoria?",
+    answer:
+      "O custo depende do porte e do escopo. Em muitos casos, o reaproveitamento de créditos tributários paga o serviço. Sem orçamento cego: alinhamos o valor antes de iniciar qualquer trabalho.",
+  },
+  {
+    question: "Vocês cobram só para conversar?",
+    answer:
+      "A primeira conversa para entender seu caso é sem custo. Avaliamos a situação e, se fizer sentido, propomos um plano — você decide antes de qualquer compromisso.",
+  },
+  {
+    question: "Mudar de contador é trabalhoso?",
+    answer:
+      "Cuidamos da migração documental e dos prazos com o contador anterior. Você acompanha o status, mas não precisa intermediar — o processo administrativo fica conosco.",
+  },
+  {
+    question: "Meu caso é pequeno demais?",
+    answer:
+      "Atendemos MEI na fronteira do ME, microempresas, pequenas e médias. O tamanho define o escopo do trabalho, não a elegibilidade para atendimento.",
+  },
+  {
+    question: "Como sei que o planejamento tributário é legal?",
+    answer:
+      "Trabalhamos exclusivamente com fundamentos legais citáveis — Leis, Leis Complementares e instruções normativas. Nenhuma recomendação depende de brecha, omissão ou prática duvidosa.",
+  },
+  {
+    question: "Vocês atendem fora de Feira de Santana?",
+    answer:
+      "Sim. Somos um escritório virtual baseado em Feira de Santana (BA) e atendemos empresas em todo o Brasil. Reuniões por call e troca documental 100% digital, sem necessidade de deslocamento.",
+  },
+];
+
+const methodSteps = [
+  {
+    title: "Diagnóstico",
+    description: "Revisamos impostos, regime tributário e obrigações atuais da sua empresa.",
+  },
+  {
+    title: "Proposta",
+    description: "Apresentamos caminhos com base legal e impacto financeiro previsto — você decide.",
+  },
+  {
+    title: "Execução",
+    description: "Implementamos e documentamos cada passo, sem ruído administrativo para você.",
+  },
+  {
+    title: "Acompanhamento",
+    description: "Monitoramos prazos e obrigações, avisando antes do vencimento — não depois.",
+  },
+];
+
+const highlightedServices = SERVICES.slice(0, 6);
+
+const jsonLd = faqSchema(homeFaq);
+---
+
+<BaseLayout
+  title="EQUILIBRIUS · Consultoria tributária e contábil em todo o Brasil"
+  description="Contabilidade e tributos sob controle, sem retrabalho e sem surpresa. Consultoria consultiva e preventiva baseada em Feira de Santana (BA), atendendo empresas em todo o Brasil."
+  path="/"
+  jsonLd={jsonLd}
+>
+  <!-- 8.2 — HERO -->
+  <section class="relative bg-ink-900 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M0 0h60v60H0z%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%22.5%22/%3E%3C/svg%3E');"></div>
+    <div class="relative max-w-[var(--container-max)] mx-auto px-6 py-20 md:py-32">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-silver-200 bg-ink-700/50 border border-ink-600 rounded-full mb-6">
+          <span class="w-2 h-2 rounded-full bg-success"></span>
+          Atendimento em todo o Brasil
+        </span>
+        <h1 class="font-display text-3xl md:text-5xl lg:text-6xl font-semibold leading-[1.1]">
+          Contabilidade e tributos sob controle, sem retrabalho e sem surpresa.
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-silver-200 leading-relaxed max-w-2xl">
+          Consultoria consultiva e preventiva para empresas brasileiras que querem pagar o imposto certo — nem mais, nem menos. Atendemos de qualquer cidade, sem deslocamento.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row gap-4">
+          <a
+            href="/contato"
+            class="inline-flex items-center justify-center px-7 py-3.5 text-base font-semibold text-ink-900 bg-white rounded-md hover:bg-silver-100 transition-colors"
+          >
+            Agendar conversa
+          </a>
+          <a
+            href="/servicos"
+            class="inline-flex items-center justify-center px-7 py-3.5 text-base font-semibold text-white border border-ink-500 rounded-md hover:bg-ink-700 transition-colors"
+          >
+            Ver serviços
+          </a>
+        </div>
+        <p class="mt-6 text-sm text-silver-300">
+          Atendimento com base legal citável · {SITE.hours}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8.3 — FAIXA DE CREDIBILIDADE -->
+  <section class="border-b border-silver-200 bg-white py-10">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h2 class="font-display text-lg font-semibold text-ink-900">5 anos de atuação</h2>
+          <p class="mt-1 text-sm text-graphite leading-relaxed">
+            Cinco anos prestando consultoria tributária e contábil com base legal citável.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-display text-lg font-semibold text-ink-900">Atendimento consultivo</h2>
+          <p class="mt-1 text-sm text-graphite leading-relaxed">
+            Você fala com quem decide — por WhatsApp, e-mail ou call, em horário comercial definido.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-display text-lg font-semibold text-ink-900">Método preventivo</h2>
+          <p class="mt-1 text-sm text-graphite leading-relaxed">
+            Avisamos obrigações e vencimentos antes do prazo — não depois.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8.4 — SERVIÇOS EM DESTAQUE -->
+  <section class="py-16 md:py-24 bg-silver-50">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <div class="max-w-2xl mb-12">
+        <h2 class="font-display text-3xl md:text-4xl font-semibold text-ink-900 mb-4">
+          Serviços que organizam sua empresa
+        </h2>
+        <p class="text-lg text-graphite leading-relaxed">
+          Cada serviço responde a uma dor real do empresário — não a um card de catálogo.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {highlightedServices.map((service) => (
+          <ServiceCard
+            title={service.title}
+            summary={service.summary}
+            href={service.url}
+          />
+        ))}
+      </div>
+      <div class="mt-10">
+        <a
+          href="/servicos"
+          class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-ink-700 border border-ink-700 rounded-md hover:bg-ink-700 hover:text-white transition-colors"
+        >
+          Ver todos os serviços
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8.5 — MÉTODO / DIFERENCIAIS -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div>
+          <h2 class="font-display text-3xl md:text-4xl font-semibold text-ink-900 mb-4">
+            Como trabalhamos
+          </h2>
+          <p class="text-lg text-graphite leading-relaxed mb-8">
+            Um processo estruturado em quatro passos — do diagnóstico ao acompanhamento contínuo. Sem achismo, sem promessa vazia.
+          </p>
+          <a
+            href="/contato"
+            class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-ink-900 rounded-md hover:bg-ink-700 transition-colors"
+          >
+            Aplicar na minha empresa
+          </a>
+        </div>
+        <div>
+          <StepList steps={methodSteps} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8.6 — PROVA DE AUTORIDADE -->
+  <section class="py-16 md:py-24 bg-ink-900 text-white">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <span class="font-display text-4xl font-bold text-white">5</span>
+          <p class="mt-1 text-sm text-silver-300 leading-snug">anos de atuação tributária e contábil</p>
+        </div>
+        <div>
+          <span class="font-display text-4xl font-bold text-white">BR</span>
+          <p class="mt-1 text-sm text-silver-300 leading-snug">atendimento em todo o Brasil</p>
+        </div>
+        <div>
+          <span class="font-display text-4xl font-bold text-white">100%</span>
+          <p class="mt-1 text-sm text-silver-300 leading-snug">recomendações com base legal citável</p>
+        </div>
+        <div>
+          <span class="font-display text-4xl font-bold text-white">CNPJ</span>
+          <p class="mt-1 text-sm text-silver-300 leading-snug">{SITE.cnpj} — empresa regular e transparente</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8.7 — SEGMENTOS ATENDIDOS -->
+  <section class="py-16 md:py-24 bg-silver-50">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <div class="max-w-2xl mb-10">
+        <h2 class="font-display text-3xl md:text-4xl font-semibold text-ink-900 mb-4">
+          Segmentos que atendemos
+        </h2>
+        <p class="text-lg text-graphite leading-relaxed">
+          A tributação muda por setor. Conhecer as especificidades do seu segmento é o primeiro passo para não pagar imposto demais.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        {SEGMENTS.map((seg) => (
+          <SegmentChip title={seg.title} href={seg.url} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 8.8 — FAQ DE OBJEÇÕES -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div>
+          <h2 class="font-display text-3xl md:text-4xl font-semibold text-ink-900 mb-4">
+            Perguntas frequentes
+          </h2>
+          <p class="text-sm text-graphite leading-relaxed">
+            As dúvidas que mais ouvimos antes do primeiro contato. Se a sua não está aqui, fale com a gente.
+          </p>
+        </div>
+        <div class="lg:col-span-2">
+          <FaqAccordion items={homeFaq} />
+          <div class="mt-8">
+            <a
+              href="/contato"
+              class="inline-flex items-center gap-2 text-sm font-medium text-ink-700 hover:text-ink-900 transition-colors"
+            >
+              Ainda tem dúvida? Fale com a Equilibrius
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8.9 — CTA FINAL -->
+  <CtaBlock
+    title="Vamos conversar sobre o seu caso?"
+    subtitle="15 minutos, sem compromisso. O próximo passo é seu."
+    serviceSlug="contato-geral"
+    submitText="Quero ser contatado"
+  />
+</BaseLayout>

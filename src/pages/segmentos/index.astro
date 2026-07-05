@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import CtaBlock from "../../components/CtaBlock.astro";
+import { SEGMENTS } from "../../lib/segments";
+---
+
+<BaseLayout
+  title="Segmentos atendidos · EQUILIBRIUS"
+  description="Contabilidade e consultoria tributária especializada por segmento — comércio, serviços, clínicas, indústria, agronegócio, tecnologia, construção civil e restaurantes."
+  path="/segmentos"
+>
+  <section class="bg-ink-900 text-white py-16 md:py-24">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <h1 class="font-display text-3xl md:text-5xl font-semibold leading-tight max-w-3xl">
+        Segmentos que atendemos
+      </h1>
+      <p class="mt-6 text-lg text-silver-200 leading-relaxed max-w-2xl">
+        A tributação muda por setor. Conhecer as especificidades do seu segmento
+        é o primeiro passo para não pagar imposto demais — nem menos do que a lei exige.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24 bg-silver-50">
+    <div class="max-w-[var(--container-max)] mx-auto px-6">
+      <Breadcrumbs trail={[{ name: "Início", href: "/" }, { name: "Segmentos", href: "/segmentos" }]} />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {SEGMENTS.map((seg) => (
+          <a
+            href={seg.url}
+            class="group block bg-white border border-silver-200 rounded-lg p-6 hover:shadow-[var(--shadow-2)] hover:border-ink-500/30 transition-all duration-200"
+          >
+            <h3 class="font-display font-semibold text-lg text-ink-900 group-hover:text-ink-700 transition-colors">
+              {seg.title}
+            </h3>
+            <p class="mt-2 text-sm text-graphite leading-relaxed">{seg.summary}</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-ink-600 group-hover:text-ink-700 transition-colors">
+              Ver detalhes
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:translate-x-1 transition-transform">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBlock
+    title="Não encontrou seu segmento?"
+    subtitle="Atendemos empresas de diversos setores em todo o Brasil. Fale com a gente."
+    serviceSlug="hub-segmentos"
+    submitText="Falar com especialista"
+  />
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  summary: string;
+  href: string;
+  variant?: "default" | "compact";
+}
+
+const { title, summary, href, variant = "default" } = Astro.props;
+---
+
+<a
+  href={href}
+  class="group block bg-white border border-silver-200 rounded-lg p-6 hover:shadow-[var(--shadow-2)] hover:border-ink-500/30 transition-all duration-200"
+>
+  <h3
+    class:list={[
+      "font-display font-semibold text-ink-900 group-hover:text-ink-700 transition-colors",
+      variant === "compact" ? "text-base" : "text-lg",
+    ]}
+  >
+    {title}
+  </h3>
+  <p class="mt-2 text-sm text-graphite leading-relaxed">{summary}</p>
+  <span class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-ink-600 group-hover:text-ink-700 transition-colors">
+    Ver detalhe
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:translate-x-1 transition-transform">
+      <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </span>
+</a>
