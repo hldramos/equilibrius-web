@@ -22,17 +22,15 @@ const formId = `lead-form-${context}-${Math.random().toString(36).slice(2, 8)}`;
   id={formId}
   name="lead"
   method="POST"
-  data-netlify="true"
-  netlify-honeypot="bot-field"
-  action="/contato?enviado=1"
+  action="https://formspree.io/f/SEU-CODIGO-AQUI"
   class:list={[
     "flex flex-col gap-4",
     variant === "card" && "p-6 md:p-8 bg-silver-50 rounded-lg border border-silver-200",
   ]}
 >
-  <input type="hidden" name="form-name" value="lead" />
-  <input type="hidden" name="bot-field" />
   <input type="hidden" name="service_context" value={serviceSlug || context} />
+  <input type="hidden" name="_subject" value={`Lead ${serviceSlug || 'geral'} - EQUILIBRIUS`} />
+  <input type="text" name="_gotcha" style="display:none" />
 
   <div>
     <label for={`${formId}-name`} class="block text-sm font-medium text-ink-900 mb-1.5">
