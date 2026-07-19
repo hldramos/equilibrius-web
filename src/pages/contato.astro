@@ -31,6 +31,8 @@ import { organizationSchema } from "../lib/seo";
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <!-- Form -->
         <div>
+          <div id="form-feedback" class="hidden"></div>
+
           <h2 class="font-display text-2xl md:text-3xl font-semibold text-ink-900 mb-6">
             Envie sua mensagem
           </h2>
@@ -122,3 +124,24 @@ import { organizationSchema } from "../lib/seo";
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const feedback = document.getElementById("form-feedback");
+  if (params.has("enviado") && feedback) {
+    feedback.className = "p-4 mb-6 text-sm font-medium text-white bg-success rounded-lg";
+    feedback.textContent = "Mensagem enviada com sucesso. Responderemos em até 1 dia útil.";
+    if (window.history.replaceState) {
+      window.history.replaceState({}, "", "/contato");
+    }
+  }
+  if (params.has("erro") && feedback) {
+    const msgs = {
+      campos_obrigatorios: "Preencha nome e pelo menos um contato (telefone ou e-mail).",
+      email_invalido: "E-mail informado não é válido.",
+      envio_falhou: "Erro ao enviar. Tente novamente ou fale pelo WhatsApp.",
+    };
+    feedback.className = "p-4 mb-6 text-sm font-medium text-white bg-error rounded-lg";
+    feedback.textContent = msgs[params.get("erro")] || "Erro ao enviar. Tente novamente.";
+  }
+</script>

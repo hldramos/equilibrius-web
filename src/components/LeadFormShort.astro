@@ -22,7 +22,7 @@ const formId = `lead-form-${context}-${Math.random().toString(36).slice(2, 8)}`;
   id={formId}
   name="lead"
   method="POST"
-  action="https://formspree.io/f/SEU-CODIGO-AQUI"
+  action="/contato/enviar.php"
   class:list={[
     "flex flex-col gap-4",
     variant === "card" && "p-6 md:p-8 bg-silver-50 rounded-lg border border-silver-200",

@@ -1,0 +1,23 @@
+RewriteEngine On
+
+# Remover trailing slash para arquivos .html (clean URL)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)/$ /$1 [L,R=301]
+
+# Adicionar .html internamente para URLs limpas
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ /$1.html [L]
+
+# Redirecionar /admin para o index do CMS
+RewriteRule ^admin/?$ admin/index.html [L]
+
+# 404 personalizado
+ErrorDocument 404 /404.html
+
+# Cache de arquivos estáticos
+<FilesMatch "\.(ico|pdf|svg|woff2?|css|js|webp|avif)$">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
