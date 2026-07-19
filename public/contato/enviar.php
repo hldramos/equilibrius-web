@@ -6,7 +6,7 @@
 
 // ─── Config ────────────────────────────────────────
 $destinatario = filter_var(
-    getenv('CONTATO_EMAIL') ?: 'equilibriusconsultoria24@gmail.com',
+    getenv('CONTATO_EMAIL') ?: 'contato@equilibriusconsultoria.com.br',
     FILTER_SANITIZE_EMAIL
 );
 $assunto_prefixo = '[Contato Equilibrius] ';
@@ -72,7 +72,7 @@ $corpo = "
 
 $headers  = "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=utf-8\r\n";
-$headers .= "From: formulario@equilibriusconsultoria.com.br\r\n";
+$headers .= "From: contato@equilibriusconsultoria.com.br\r\n";
 $headers .= "Reply-To: " . ($email ?: $destinatario) . "\r\n";
 
 $assunto = $assunto_prefixo . ($contexto !== 'contato-geral' ? "[$contexto] " : '') . $nome;

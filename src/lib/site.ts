@@ -15,7 +15,7 @@ export const SITE = {
   whatsapp: "(75) 98146-3142",
   whatsappRaw: "5575981463142",
   whatsappLink: "https://wa.me/5575981463142?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Equilibrius%20e%20gostaria%20de%20falar%20sobre%20o%20meu%20caso.",
-  email: "equilibriusconsultoria24@gmail.com",
+  email: "contato@equilibriusconsultoria.com.br",
   hours: "Segunda a sexta-feira, das 08h00 às 17h30",
   yearsActive: 5,
   voice: "Consultiva, estratégica e preventiva, com foco em soluções tributárias e contábeis.",
